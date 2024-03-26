@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:12:11 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/25 22:10:45 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:11:46 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 size_t	ft_strlen(char *s);
-int		ft_strchr(char *str, int c);
+char	*ft_strchr(char *str, int c);
 void	ft_str_join(char *res, char *s1, char *s2);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);

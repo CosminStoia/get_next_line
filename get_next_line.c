@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/25 22:40:45 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:40:37 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,23 @@ char	*ft_read_file(int fd, char *string)
 	int		bytes_red;
 
 	if (!string)
-		string = malloc(BUFFER_SIZE * sizeof(char));
+	{
+		string = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		string[0] = '\0';
+	}
 	if (!string)
 		return (NULL);
 	bytes_red = 1;
-	while (bytes_red)
+	while (bytes_red != 0 && !ft_strchr(string, '\n'))
 	{
 		bytes_red = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_red == -1)
-			return (free(string), NULL);
+		{
+			free(string);
+			return (NULL);
+		}
 		buffer[bytes_red] = '\0';
 		string = ft_strjoin(string, buffer);
-		if (ft_strchr(string, '\n'))
-			break ;
 	}
 	return (string);
 }
@@ -41,7 +45,7 @@ char	*ft_get_line(char *string)
 	char	*last_str;
 
 	i = 0;
-	if (!string[i])
+	if (!string[i] || string[i] == '\0')
 		return (NULL);
 	while (string[i] != '\0' && string[i] != '\n')
 		i++;
@@ -72,12 +76,12 @@ char	*ft_new_string(char *string)
 	i = 0;
 	while (string[i] != '\0' && string[i] != '\n')
 		i++;
-	if (!string[i])
+	if (!string[i] || string[i] == '\0')
 	{
 		free(string);
 		return (NULL);
 	}
-	str = (char *)malloc((ft_strlen(string) + 1) * sizeof(char));
+	str = (char *)malloc(ft_strlen(string) * sizeof(char));
 	if (!str)
 	{
 		free(string);
@@ -97,7 +101,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*string;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	line = NULL;
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 10240 || read(fd, 0, 0) < 0)
 		return (NULL);
 	string = ft_read_file(fd, string);
 	if (!string)
