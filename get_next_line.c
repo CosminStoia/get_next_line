@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 11:40:37 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 14:53:55 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char	*ft_read_file(int fd, char *string)
 		bytes_red = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_red == -1)
 		{
+			buffer[bytes_red] = '\0';
 			free(string);
+			string = NULL;
 			return (NULL);
 		}
 		buffer[bytes_red] = '\0';
@@ -39,7 +41,7 @@ char	*ft_read_file(int fd, char *string)
 	return (string);
 }
 
-char	*ft_get_line(char *string)
+char	*ft_extract_line(char *string)
 {
 	int		i;
 	char	*last_str;
@@ -67,7 +69,7 @@ char	*ft_get_line(char *string)
 	return (last_str);
 }
 
-char	*ft_new_string(char *string)
+char	*ft_update_string(char *string)
 {
 	int		i;
 	int		j;
@@ -76,7 +78,7 @@ char	*ft_new_string(char *string)
 	i = 0;
 	while (string[i] != '\0' && string[i] != '\n')
 		i++;
-	if (!string[i] || string[i] == '\0')
+	if (string[i] == '\0')
 	{
 		free(string);
 		return (NULL);
@@ -107,13 +109,13 @@ char	*get_next_line(int fd)
 	string = ft_read_file(fd, string);
 	if (!string)
 		return (NULL);
-	line = ft_get_line(string);
+	line = ft_extract_line(string);
 	if (!line)
 	{
 		free(string);
 		string = NULL;
 		return (NULL);
 	}
-	string = ft_new_string(string);
+	string = ft_update_string(string);
 	return (line);
 }
