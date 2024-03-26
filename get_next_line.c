@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 20:56:31 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 22:01:55 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ char	*ft_extract_line(char *string)
 		return (NULL);
 	while (string[i] != '\0' && string[i] != '\n')
 		i++;
-	last_str = (char *)malloc((i + 2) * sizeof(char));
+	if (string[i] == '\n')
+		last_str = (char *)malloc((i + 2) * sizeof(char));
+	else
+		last_str = (char *)malloc((i + 1) * sizeof(char));
 	if (!last_str)
 		return (NULL);
 	i = 0;

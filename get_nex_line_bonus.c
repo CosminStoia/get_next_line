@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:59:49 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 21:01:30 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 21:16:58 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*ft_read_file(int fd, char *string)
 			break ;
 		buffer[bytes_red] = '\0';
 		string = ft_strjoin(string, buffer);
+		if (!string)
+			return (NULL);
 	}
 	return (string);
 }
@@ -135,5 +137,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	string[fd] = ft_update_string(string[fd]);
+	if (!string)
+		return (NULL);
 	return (line);
 }
