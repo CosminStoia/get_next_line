@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 22:49:24 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 22:57:35 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,25 @@ char	*ft_read_file(int fd, char *string)
 	return (string);
 }
 
+char	*ft_string_copy(char *string, char *last_str)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != '\0' && string[i] != '\n')
+	{
+		last_str[i] = string[i];
+		i++;
+	}
+	if (string[i] == '\n')
+	{
+		last_str[i] = string[i];
+		i++;
+	}
+	last_str[i] = '\0';
+	return (last_str);
+}
+
 char	*ft_extract_line(char *string)
 {
 	int		i;
@@ -58,17 +77,7 @@ char	*ft_extract_line(char *string)
 	if (!last_str)
 		return (NULL);
 	i = 0;
-	while (string[i] != '\0' && string[i] != '\n')
-	{
-		last_str[i] = string[i];
-		i++;
-	}
-	if (string[i] == '\n')
-	{
-		last_str[i] = string[i];
-		i++;
-	}
-	last_str[i] = '\0';
+	last_str = ft_string_copy(string, last_str);
 	return (last_str);
 }
 

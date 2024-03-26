@@ -6,24 +6,11 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:59:49 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 21:16:58 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 23:00:13 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*a;
-
-	a = s;
-	while (n > 0)
-	{
-		*a = 0;
-		a++;
-		n--;
-	}
-}
 
 char	*ft_read_file(int fd, char *string)
 {
@@ -49,26 +36,15 @@ char	*ft_read_file(int fd, char *string)
 		if (bytes_red == 0)
 			break ;
 		buffer[bytes_red] = '\0';
-		string = ft_strjoin(string, buffer);
-		if (!string)
-			return (NULL);
+		string = ft_strjoin_and_free(string, buffer);
 	}
 	return (string);
 }
 
-char	*ft_extract_line(char *string)
+char	*ft_string_copy(char *string, char *last_str)
 {
-	int		i;
-	char	*last_str;
+	int	i;
 
-	i = 0;
-	if (!string[i] || string[i] == '\0')
-		return (NULL);
-	while (string[i] != '\0' && string[i] != '\n')
-		i++;
-	last_str = (char *)malloc((i + 2) * sizeof(char));
-	if (!last_str)
-		return (NULL);
 	i = 0;
 	while (string[i] != '\0' && string[i] != '\n')
 	{
@@ -81,6 +57,27 @@ char	*ft_extract_line(char *string)
 		i++;
 	}
 	last_str[i] = '\0';
+	return (last_str);
+}
+
+char	*ft_extract_line(char *string)
+{
+	int		i;
+	char	*last_str;
+
+	i = 0;
+	if (!string[i] || string[i] == '\0')
+		return (NULL);
+	while (string[i] != '\0' && string[i] != '\n')
+		i++;
+	if (string[i] == '\n')
+		last_str = (char *)malloc((i + 2) * sizeof(char));
+	else
+		last_str = (char *)malloc((i + 1) * sizeof(char));
+	if (!last_str)
+		return (NULL);
+	i = 0;
+	last_str = ft_string_copy(string, last_str);
 	return (last_str);
 }
 

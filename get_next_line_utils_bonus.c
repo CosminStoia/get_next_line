@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:59:20 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 20:59:33 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 22:59:45 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,54 +40,43 @@ char	*ft_strchr(char *str, int c)
 	return (NULL);
 }
 
-void	ft_str_join(char *res, char *s1, char *s2)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	j = 0;
-	while (s1[j])
-		res[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-}
-
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*res;
+	char	*str;
+	int		count;
 
-	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!res)
+	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!str)
 		return (NULL);
-	ft_str_join(res, s1, s2);
-	free(s1);
-	return (res);
+	count = 0;
+	while (*s1)
+		str[count++] = *s1++;
+	while (*s2)
+		str[count++] = *s2++;
+	str[count] = '\0';
+	return (str);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strjoin_and_free(char *string, char *buffer)
 {
-	int		i;
-	size_t	len;
-	char	*dup;
+	char	*str;
 
-	i = 0;
-	len = ft_strlen(s1);
-	if (s1 == NULL)
-	{
+	if (string == NULL || buffer == NULL)
 		return (NULL);
-	}
-	dup = (char *)malloc((len + 1) * sizeof(char));
-	if (dup != NULL)
+	str = ft_strjoin(string, buffer);
+	free(string);
+	return (str);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*a;
+
+	a = s;
+	while (n > 0)
 	{
-		while (s1[i])
-		{
-			dup[i] = s1[i];
-			i++;
-		}
-		dup[i] = '\0';
+		*a = 0;
+		a++;
+		n--;
 	}
-	return (dup);
 }
