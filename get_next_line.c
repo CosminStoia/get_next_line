@@ -6,24 +6,11 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 22:01:55 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 22:49:24 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*a;
-
-	a = s;
-	while (n > 0)
-	{
-		*a = 0;
-		a++;
-		n--;
-	}
-}
 
 char	*ft_read_file(int fd, char *string)
 {
@@ -49,7 +36,7 @@ char	*ft_read_file(int fd, char *string)
 		if (bytes_red == 0)
 			break ;
 		buffer[bytes_red] = '\0';
-		string = ft_strjoin(string, buffer);
+		string = ft_strjoin_and_free(string, buffer);
 	}
 	return (string);
 }
