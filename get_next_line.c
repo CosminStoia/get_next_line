@@ -6,11 +6,24 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 14:11:06 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 14:53:55 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/03/26 16:19:22 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*a;
+
+	a = s;
+	while (n > 0)
+	{
+		*a = 0;
+		a++;
+		n--;
+	}
+}
 
 char	*ft_read_file(int fd, char *string)
 {
@@ -19,22 +32,22 @@ char	*ft_read_file(int fd, char *string)
 
 	if (!string)
 	{
-		string = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		string = malloc(sizeof(char));
+		if (!string)
+			return (NULL);
 		string[0] = '\0';
 	}
-	if (!string)
-		return (NULL);
 	bytes_red = 1;
 	while (bytes_red != 0 && !ft_strchr(string, '\n'))
 	{
 		bytes_red = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_red == -1)
 		{
-			buffer[bytes_red] = '\0';
 			free(string);
-			string = NULL;
 			return (NULL);
 		}
+		if (bytes_red == 0)
+			break ;
 		buffer[bytes_red] = '\0';
 		string = ft_strjoin(string, buffer);
 	}
@@ -83,7 +96,7 @@ char	*ft_update_string(char *string)
 		free(string);
 		return (NULL);
 	}
-	str = (char *)malloc(ft_strlen(string) * sizeof(char));
+	str = (char *)malloc((ft_strlen(string) - i) * sizeof(char));
 	if (!str)
 	{
 		free(string);
@@ -104,8 +117,12 @@ char	*get_next_line(int fd)
 	static char	*string;
 
 	line = NULL;
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 10240 || read(fd, 0, 0) < 0)
-		return (NULL);
+	if (BUFFER_SIZE <= 0 || fd < 0)
+	{
+		if (read(fd, NULL, 0) < 0)
+			return (NULL);
+		return (ft_bzero(string, ft_strlen(string)), NULL);
+	}
 	string = ft_read_file(fd, string);
 	if (!string)
 		return (NULL);
