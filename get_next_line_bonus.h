@@ -6,7 +6,7 @@
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:58:19 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 22:59:24 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:51:19 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
 # endif
+
+# define FD_NUM 1024
 
 size_t	ft_strlen(char *s);
 char	*ft_strchr(char *str, int c);

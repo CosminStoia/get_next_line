@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_nex_line_bonus.c                               :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cstoia <cstoia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:59:49 by cstoia            #+#    #+#             */
-/*   Updated: 2024/03/26 23:00:13 by cstoia           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:54:00 by cstoia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	*ft_update_string(char *string)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*string[4096];
+	static char	*string[FD_NUM];
 
 	line = NULL;
 	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, string[fd], 0) < 0)
@@ -134,7 +134,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	string[fd] = ft_update_string(string[fd]);
-	if (!string)
+	if (!string[fd])
 		return (NULL);
 	return (line);
 }
